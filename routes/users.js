@@ -16,6 +16,6 @@ router.post(
 
 // Login
 
-// Missing a signup route, but we can most likely just link directly to our usersController method
+router.post("/signup", usersController.user_signup_post);
 
 module.exports = router;

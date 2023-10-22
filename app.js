@@ -12,8 +12,8 @@ const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const mongoose = require("mongoose");
 
-// const indexRouter = require("./routes/index");
-// const usersRouter = require("./routes/users");
+const indexRouter = require("./routes/index");
+const usersRouter = require("./routes/users");
 
 const secret = process.env.REFRESH_KEY;
 
@@ -103,7 +103,7 @@ app.use(passport.initialize());
 app.use(passport.session());
 
 app.use("/", indexRouter);
-app.use("/users", usersRouter);
+app.use("/user", usersRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
@@ -121,6 +121,6 @@ app.use(function (err, req, res, next) {
   res.render("error");
 });
 
-app.listen(3000, () => console.log("Server started on port 3000"));
+app.listen(3001, () => console.log("Server started on port 3001"));
 
 module.exports = app;

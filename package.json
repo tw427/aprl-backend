@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "devstart": "nodemon ./bin/www",
-    "serverstart": "DEBUG=backend:* npm run devstart"
+    "serverstart": "DEBUG=aprl-backend:* npm run devstart",
+    "stop": "taskkill -f -im node.exe"
   },
   "dependencies": {
     "bcryptjs": "^2.4.3",

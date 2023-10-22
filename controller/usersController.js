@@ -32,7 +32,9 @@ exports.user_signup_post = [
     }
 
     // Check if user exists prior
-    const userExist = await User.find({ username: req.body.username }).exec();
+    const userExist = await User.findOne({
+      username: req.body.username,
+    }).exec();
     if (userExist) {
       return res.status(400).json({
         error: "Username already exists.",
