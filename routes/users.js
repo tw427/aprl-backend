@@ -14,7 +14,27 @@ router.post(
   usersController.user_auth_post
 );
 
-// Login
+router.post("/login", function (req, res, next) {
+  passport.authenticate("local", { session: false }, (err, user, info) => {
+    console.log(user);
+    if (err || !user) {
+      return res.status(400).json({
+        message: "User does not exist or user information was incorrect",
+      });
+    }
+
+    req.login(user, { session: false }, (err) => {
+      if (err) {
+        res.send(err);
+      }
+
+      const token = jwt.sign(user.toJSON(), process.env.REFRESH_KEY, {
+        expiresIn: "60m",
+      });
+      return res.json({ user, token });
+    });
+  })(req, res);
+});
 
 router.post("/signup", usersController.user_signup_post);
 

@@ -11,7 +11,9 @@ const LocalStrategy = require("passport-local").Strategy;
 const JwtStrategy = require("passport-jwt").Strategy;
 const ExtractJwt = require("passport-jwt").ExtractJwt;
 const mongoose = require("mongoose");
+const bcrypt = require("bcryptjs");
 
+const User = require("./models/user");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
 
@@ -26,6 +28,8 @@ async function main() {
   await mongoose.connect(mongoDB);
 }
 
+const app = express();
+
 passport.use(
   new LocalStrategy(async (username, password, done) => {
     try {
@@ -33,7 +37,9 @@ passport.use(
       if (!user) {
         return done(null, false, { message: "Incorrect username" });
       }
-      if (user.password !== password) {
+      const match = await bcrypt.compare(password, user.password);
+      if (!match) {
+        // passwords do not match!
         return done(null, false, { message: "Incorrect password" });
       }
       return done(null, user, {
@@ -79,9 +85,6 @@ passport.deserializeUser(async function (id, done) {
   }
 });
 
-const app = express();
-
-// view engine setup
 // app.set("views", path.join(__dirname, "views"));
 // app.set("view engine", "jade");
 
