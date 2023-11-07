@@ -14,9 +14,12 @@ router.post(
   usersController.user_auth_post
 );
 
+// Post a message
+router.post("/create-message/:id", usersController.user_message_post);
+
+// Authorize login credentials
 router.post("/login", function (req, res, next) {
   passport.authenticate("local", { session: false }, (err, user, info) => {
-    console.log(user);
     if (err || !user) {
       return res.status(400).json({
         message: "User does not exist or user information was incorrect",
@@ -36,6 +39,7 @@ router.post("/login", function (req, res, next) {
   })(req, res);
 });
 
+// Create a new User / Account
 router.post("/signup", usersController.user_signup_post);
 
 module.exports = router;

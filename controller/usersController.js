@@ -1,5 +1,6 @@
 require("dotenv").config();
 const User = require("../models/user");
+const Message = require("../models/message");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
@@ -38,13 +39,13 @@ exports.user_signup_post = [
 
     if (userExist) {
       return res.status(400).json({
-        error: "Username already exists.",
+        message: "Username already exists.",
       });
     }
     // Password equality check
     if (req.body.password !== req.body.confirmPassword) {
       return res.status(401).json({
-        error: "Passwords must match!",
+        message: "Passwords must match!",
       });
     }
 
@@ -92,3 +93,26 @@ exports.user_auth_post = asyncHandler(async (req, res, next) => {
     }
   });
 });
+
+exports.user_message_post = [
+  body("message", "Message must include at least 1 character")
+    .trim()
+    .isLength({ min: 1 })
+    .escape(),
+
+  asyncHandler(async (req, res, next) => {
+    const errors = validationResult(req);
+
+    const message = new Message({
+      author: req.params.id,
+      message: req.body.message,
+    });
+
+    if (!errors.isEmpty()) {
+      return res.json({ error: errors.array() });
+    }
+
+    await message.save();
+    res.status(200).json({ message: message });
+  }),
+];
