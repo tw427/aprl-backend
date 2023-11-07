@@ -116,3 +116,11 @@ exports.user_message_post = [
     res.status(200).json({ message: message });
   }),
 ];
+
+exports.user_message_get = asyncHandler(async (req, res, next) => {
+  const userMessage = await Message.find({ author: req.params.id })
+    .populate("author", ["username", "_id"])
+    .exec();
+
+  res.json(userMessage);
+});
