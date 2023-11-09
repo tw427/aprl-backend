@@ -103,10 +103,12 @@ exports.user_message_post = [
   asyncHandler(async (req, res, next) => {
     const errors = validationResult(req);
 
+    const newDate = `${req.params.month}/${req.params.day}/${req.params.year}`;
+
     const message = new Message({
       author: req.params.id,
       message: req.body.message,
-      date: req.params.date,
+      date: newDate,
       time: req.params.time,
     });
 

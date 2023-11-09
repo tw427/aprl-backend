@@ -16,7 +16,7 @@ router.post(
 
 // Post a message
 router.post(
-  "/create-message/:id/:date/:time",
+  "/create-message/:id/:month/:day/:year/:time",
   usersController.user_message_post
 );
 
