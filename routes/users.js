@@ -15,10 +15,13 @@ router.post(
 );
 
 // Post a message
-router.post("/create-message/:id", usersController.user_message_post);
+router.post(
+  "/create-message/:id/:date/:time",
+  usersController.user_message_post
+);
 
 // Get a message by a User
-router.get("/:id/messages", usersController.user_message_get);
+router.get("/:id/messages/", usersController.user_message_get);
 
 // Authorize login credentials
 router.post("/login", function (req, res, next) {

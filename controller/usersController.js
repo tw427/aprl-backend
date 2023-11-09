@@ -106,6 +106,8 @@ exports.user_message_post = [
     const message = new Message({
       author: req.params.id,
       message: req.body.message,
+      date: req.params.date,
+      time: req.params.time,
     });
 
     if (!errors.isEmpty()) {

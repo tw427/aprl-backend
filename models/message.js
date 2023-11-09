@@ -5,9 +5,9 @@ const Schema = mongoose.Schema;
 const MessageSchema = new Schema({
   author: { type: Schema.Types.ObjectId, ref: "User", required: true },
   message: { type: String, required: true },
-  // Does group need to be just a string? Or just the group id ?
   // group : {type: Schema.Types.ObjectId, ref: "Group", required: true},
-  // time : {}
+  date: { type: Array, required: true },
+  time: { type: Array, required: true },
 });
 
 module.exports = mongoose.model("Message", MessageSchema);
