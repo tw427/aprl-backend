@@ -16,6 +16,7 @@ const bcrypt = require("bcryptjs");
 const User = require("./models/user");
 const indexRouter = require("./routes/index");
 const usersRouter = require("./routes/users");
+const messageRouter = require("./routes/message");
 
 const secret = process.env.REFRESH_KEY;
 
@@ -107,6 +108,7 @@ app.use(passport.session());
 
 app.use("/", indexRouter);
 app.use("/user", usersRouter);
+app.use("/user/message", messageRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
