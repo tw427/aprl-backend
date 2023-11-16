@@ -6,7 +6,7 @@ const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
 
 exports.group_create = [
-  body("name", "Group name must be at least 3 characters long")
+  body("groupname", "Group name must be at least 3 characters long")
     .trim()
     .isLength({ min: 3 })
     .escape(),
@@ -15,7 +15,7 @@ exports.group_create = [
     const errors = validationResult(req);
 
     const group = new Group({
-      name: req.body.name,
+      name: req.body.groupname,
     });
 
     if (!errors.isEmpty()) {
