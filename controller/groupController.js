@@ -1,6 +1,6 @@
 require("dotenv").config();
 // const User = require("../models/user");
-// const Message = require("../models/message");
+const Message = require("../models/message");
 const Group = require("../models/group");
 const { body, validationResult } = require("express-validator");
 const asyncHandler = require("express-async-handler");
@@ -28,13 +28,17 @@ exports.group_create = [
 ];
 
 exports.group_list = asyncHandler(async (req, res, next) => {
-  const groupList = await Group.find({}).populate("history").exec();
+  const groupList = await Group.find({}).exec();
 
   res.json(groupList);
 });
 
 exports.group_get_history = asyncHandler(async (req, res, next) => {
-  const group = await Group.findById(req.params.id).populate("history").exec();
+  const group = await Group.findById(req.params.id)
+    .populate("history")
+    .populate({ path: "history", populate: { path: "author" } })
+    .exec();
 
-  res.json(group);
+  console.log(group);
+  res.json(group.history);
 });

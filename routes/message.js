@@ -6,7 +6,7 @@ const messageController = require("../controller/messageController");
 
 // Post a message
 router.post(
-  "/create-message/:id/:month/:day/:year/:time",
+  "/create-message/:groupId/:userId/:month/:day/:year/:time",
   messageController.message_post
 );
 
