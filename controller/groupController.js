@@ -32,3 +32,9 @@ exports.group_list = asyncHandler(async (req, res, next) => {
 
   res.json(groupList);
 });
+
+exports.group_get_history = asyncHandler(async (req, res, next) => {
+  const group = await Group.findById(req.params.id).populate("history").exec();
+
+  res.json(group);
+});
