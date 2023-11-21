@@ -39,6 +39,5 @@ exports.group_get_history = asyncHandler(async (req, res, next) => {
     .populate({ path: "history", populate: { path: "author" } })
     .exec();
 
-  console.log(group);
   res.json(group.history);
 });

@@ -26,12 +26,6 @@ exports.message_post = [
       time: req.params.time,
     });
 
-    // const updatedGroup = new Group({
-    //   name: group.name,
-    //   history: [...group.history, message],
-    //   _id: req.params.groupId,
-    // });
-
     if (!errors.isEmpty()) {
       return res.json({ error: errors.array() });
     }
