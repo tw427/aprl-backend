@@ -11,6 +11,6 @@ router.post(
 );
 
 // Delete a message
-router.post("/delete/:id", messageController.message_delete);
+router.post("/delete/:groupid/:messageid", messageController.message_delete);
 
 module.exports = router;

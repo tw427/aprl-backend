@@ -38,6 +38,9 @@ exports.message_post = [
 ];
 
 exports.message_delete = asyncHandler(async (req, res, next) => {
-  await Message.findByIdAndDelete(req.params.id);
-  return res.status(200).json({ message: `Message ${req.params.id} removed!` });
+  await Group.findByIdAndUpdate(req.params.groupid, {
+    $pull: { history: req.params.messageid },
+  });
+  await Message.findByIdAndDelete(req.params.messageid);
+  return res.status(200).json({ message: "Success! Message removed!" });
 });

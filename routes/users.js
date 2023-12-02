@@ -42,4 +42,7 @@ router.post("/login", function (req, res, next) {
 // Create a new User / Account
 router.post("/signup", usersController.user_signup_post);
 
+// Use list
+router.get("/list", usersController.user_list_get);
+
 module.exports = router;
