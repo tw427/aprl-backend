@@ -36,7 +36,7 @@ exports.group_list = asyncHandler(async (req, res, next) => {
 exports.group_get_history = asyncHandler(async (req, res, next) => {
   const group = await Group.findById(req.params.id)
     .populate("history")
-    .populate({ path: "history", populate: { path: "author" } })
+    .populate({ path: "history", populate: { path: "author group" } })
     .exec();
 
   res.json(group.history);

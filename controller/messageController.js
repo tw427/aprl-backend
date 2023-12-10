@@ -24,6 +24,7 @@ exports.message_post = [
       message: req.body.message,
       date: newDate,
       time: req.params.time,
+      group: await Group.findById(req.params.groupId).exec(),
     });
 
     if (!errors.isEmpty()) {
