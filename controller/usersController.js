@@ -1,6 +1,7 @@
 require("dotenv").config();
 const User = require("../models/user");
 const Message = require("../models/message");
+const DirectMessage = require("../models/directMessage");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcryptjs");
 const { body, validationResult } = require("express-validator");
@@ -52,10 +53,19 @@ exports.user_signup_post = [
     bcrypt.hash(req.body.password, 10, async (err, hashedPassword) => {
       if (err) return next(err);
 
+      const directMessage = new DirectMessage({
+        user: req.body.username,
+        history: [],
+      });
+
+      await directMessage.save();
+
       const user = new User({
         username: req.body.username,
         password: hashedPassword,
+        directMessages: directMessage._id,
       });
+
       await user.save();
 
       jwt.sign(

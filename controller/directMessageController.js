@@ -8,24 +8,20 @@ const asyncHandler = require("express-async-handler");
 // These will be separated from our regular chatroom messages
 
 // Direct Messages follow a
-// {users: [], history: []}
-// When we create a Direct Message it will become a direct link between
-// our two users, and any additional new connections from our Base user
-// will have an additional object added to both users and history
+// { user: "name", history:
+//   [
+//     {
+//     sender: "name",
+//     recipient: "name",
+//     log: [Message, Message, Message],
+//     }
+//   ]}
 
-// For example if there are messsages between Bug and Katie | Bug and Tony
-// {
-//     users: [
-//         {names: ["Bug", "Katie"]},
-//         {names: ["Bug", "Tony"]}
-//     ],
-//     history: [
-//         {names: ["Bug", "Katie"], messages: [{}, {}, {}]},
-//         {names: ["Bug", "Tony"], messages: [{}, {}, {}]}
-//     ]
-// }
-// In this way we can first sort through our recipents users array
-// to see if there is an already existing conversation
-// depending on if that is true we can pull the history instead of
-// creating new objects, if false we will create new objects and start
-// a new record / history of the new conversation.
+// Each time a new DirectMessage is formed between two users
+// we will store the chat history logs within the sender's collection
+
+// Now when we check for a log we will use the conditionals in this way:
+// Scan for a history object for who the sender is in this case
+// Once we have identified the sender we will be presented with 2 choices
+// If current user is not sender, we query the sender's collection for logs
+// If current user is sender, get logs.
